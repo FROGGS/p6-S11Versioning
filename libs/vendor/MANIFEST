@@ -1,1 +1,15 @@
-[ ]
+[
+    {
+        "id" : "1",
+        "name" : "Foo::Bar",
+        "version" : "0.27",
+        "description" : "The most useful beta module evar!!",
+        "author" : "Kevin Flynn <kevin@EN.COM>",
+        "modules" : {
+            "Foo::Bar" : "Foo/Bar.pm"
+        },
+        "files" : [
+            "Foo/Bar.pod"
+        ]
+    }
+]
