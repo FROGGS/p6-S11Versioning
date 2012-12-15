@@ -85,3 +85,5 @@ feature we need a mapping table like Perl 5's unicore/Name.pl.
 
 If we don't have such a mapping table or a character can not be translated, it will be presented as
 its Unicode codepoint. 北亰 = x5317x4EB0.pm
+
+2) The author field should be made mandatory: https://github.com/perl6/ecosystem/blob/master/spec.pod
