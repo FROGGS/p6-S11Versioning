@@ -19,7 +19,7 @@ grammar S11Versioning::Grammar {
 		'ver'?
 		'<' ~ '>' [
 			\*
-			| <version>
+			| '^'? <version>
 		]
 	};
 
@@ -28,9 +28,8 @@ grammar S11Versioning::Grammar {
 		'ver'?
 		'(' ~ ')' [
 			'Any'
-			| $<version_from> = <version>          '..' $<version_to> = [ \* | <version> ]
-			| $<version_from> = [ \* | <version> ] '..' $<version_to> = [ '^'? <version> ]
-			| [ <ws>? <version> <ws>? ]+ % [ '|' ]
+			| $<version_from> = [ \* | <version> ] '..' $<version_to> = [ \* | '^'? <version> ]
+			| [ <ws>? '^'? <version> <ws>? ]+ % [ '|' ]
 		]
 	};
 

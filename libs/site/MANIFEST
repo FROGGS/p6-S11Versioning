@@ -1,8 +1,30 @@
 [
     {
-        "name" : "Perl",
-        "version" : "6.2.7",
-        "description" : "Perl 6",
-        "author" : "The Perl Foundation"
+        "id" : "1",
+        "name" : "Foo::Bar",
+        "version" : "1.0.1",
+        "description" : "The most useful module evar!!",
+        "author" : "Kevin Flynn <kevin@EN.COM>",
+        "modules" : {
+            "Foo::Bar" : "Foo/Bar-1.pm",
+            "Foo::Bar::Constants" : "Foo/Bar/Constants.pm"
+        },
+        "files" : [
+            "Foo/Bar-1.pod"
+        ]
+    },
+    {
+        "id" : "2",
+        "name" : "Foo::Bar",
+        "version" : "1.0.4",
+        "description" : "The most useful module evar!! (improved)",
+        "author" : "Kevin Flynn <kevin@EN.COM>",
+        "modules" : {
+            "Foo::Bar" : "Foo/Bar.pm",
+            "Foo::Bar::Constants" : "Foo/Bar/Constants.pm"
+        },
+        "files" : [
+            "Foo/Bar.pod"
+        ]
     }
 ]
