@@ -1,5 +1,6 @@
-## installing distributions:
+# installing distributions:
 
+```
 user@host:~$ panda install Foo::Bar
 Searching for 'Foo::Bar'...
 Found:
@@ -26,8 +27,9 @@ Installing #2 /usr/lib/perl6/rakudo-1.0/bin/xml2json.pl
   |--> 2.2  XML::Awesome         /usr/lib/perl6/rakudo-1.0/XML/Awesome.pod      iuhwroiz-3pw89rza-oih3oez7-8wt3eiug-w3ro87ot
   `--> 2.3  XML::Awesome         /usr/lib/perl6/rakudo-1.0/bin/xml2json.pl      sdkjfhsd-sdfsdfw4-f4zezd65-ed6ze56z-de6zz6zd
 Done.
+```
 
-
+```
 user@host:~$ panda install -dev Foo::Bar
 Found:
   Foo::Bar  v1.0.5-dev  by Kevin Flynn  GPL2  SHA1 2fd4e1c6-7a2d28fc-ed849ee1-bb76e739-1b93eb12
@@ -44,42 +46,42 @@ Updating /usr/lib/perl6/rakudo-1.0/MANIFEST
   |--> 3.2  /usr/lib/perl6/rakudo-1.0/Foo/Bar-3.pod                81072273-j7ih2k4z-uztztu34-2zifihg3-5434ztfz
   `--> 3.3  /usr/lib/perl6/rakudo-1.0/Foo/Bar/Constans.pm          khdlfkhg-lskjdhfg-lshdflkg-jhsdkhgr-uhgdksu4 # this one is already there, no duplicates!
 Done.
+```
 
+# Note
+After that the Foo::Bar-1.0.4 is still the default one that will be used if you just do: `use Foo::Bar;`.
 
-# After that the Foo::Bar-1.0.4 is still the default one that will be used if you just do: "use Foo::Bar;".
-# You can activate a specific distribution by:
-user@host:~$ panda activate Foo::Bar 1.0.5-dev
--- or --
-user@host:~$ panda activate #3
--- or --
-user@host:~$ panda activate Foo::Bar Kevin Flynn        # (if you want to get the newest distribution of a specific auth)
-# This will rename things like Bar.pm to Bar-1.pm and Bar-3.pm to Bar.pm.
-# If it is the case that you have a Bar.pm that is shared by several dists, then it gets the lowest uid appended.
-# The MANIFEST file needs to be updated in most (all?) of these cases.
+I believe there is no proper way to mark a specific (lower) version as the default. Since when you do that
+in your home directory, there still might be a higher version in site, vendor or perl that will be picked up.
 
-## searching for distributions:
-use Foo::Bar<v1.0.5> ==> lookup Foo/Bar.pm in INC, reading MANIFESTS from: home, site, vendor and perl.
-The @*INC should be empty by default, but if there is the PERL6LIB environment variable then its
-directories (separated by colons) are used. One can prepend directories to @*INC by adding
-"use lib 'PATH';" to his code.
+# searching for distributions:
+`use Foo::Bar<v1.0.5>` ==> lookup Foo/Bar.pm in INC, reading MANIFESTS from: home, site, vendor and perl.
+The @*INC should be empty by default, but if there is the `PERL6LIB` environment variable then its
+directories (separated by colons) are used. One can prepend directories to `@*INC` by adding
+`use lib 'PATH';` to his code.
+
 When searching for a module (or class or role) then we check first if there is a matching file in
-@*INC. If there is one, then this is our only candidate, even if it maybe have a lower version then
+`@*INC`. If there is one, then this is our only candidate, even if it maybe have a lower version then
 we are searching for (or a wrong auth). This feature is ment for module developement, so that you
 don't have to install your just-written module to be able to test it.
-If there was no matching file in @*INC, we are grabbing the MANIFEST files from home, site, vendor
+
+If there was no matching file in `@*INC`, we are grabbing the MANIFEST files from home, site, vendor
 and perl. The module with the highest version that matches the given auth+version of the "use"-state-
-ments wins. I don't know if this will play well together with the "panda activate ..." method above.
-BTW, the home, site, vendor and perl directories are already accessable via %*CUSTOM_LIB.
+ments wins.
+BTW, the home, site, vendor and perl directories are already accessable via `%*CUSTOM_LIB`.
+
 The good thing with the method above is that you really don't have to bother if you can sudo or not
 when installing modules. If you can, stuff will be installed to site. If not, it will end up in your
 home. But in the end, the "best" module will win, wether it is in your home or site or whereever.
 
-## Notes:
+# Notes:
 1) Since we use the module-, class- or rolename as filename, and names in Perl are UTF-8 (Unicode)
 and we must care of ASCII-filesystems there will be a translation step. If it is easy to for panda
-to get the capabilities of the filesystem it can decide 
-that it only tries to translate the names if the filesystem does not support Unicode.
+to get the capabilities of the filesystem it can decide that it only tries to translate the names
+if the filesystem does not support Unicode.
+
 Example: A class called 北亰 will end up as BeiJing.pm on non-Unicode-able filesystems. For this
 feature we need a mapping table like Perl 5's unicore/Name.pl.
+
 If we don't have such a mapping table or a character can not be translated, it will be presented as
 its Unicode codepoint. 北亰 = x5317x4EB0.pm
