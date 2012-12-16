@@ -51,7 +51,9 @@ sub use ( $module ) is export {
 				}
 
 				if $bag<ver>[0] {
-					$dist<version> = Version.new( ~$dist<version> );
+					$dist<version> = $dist<version> eq '*'
+					               ?? Version.new( 'v0' )
+					               !! Version.new( ~$dist<version> );
 
 					if $bag<ver>[0]<version_from> && $bag<ver>[0]<version_to> {
 						my $from       = ~$bag<ver>[0]<version_from>;
