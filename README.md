@@ -66,8 +66,7 @@ we are searching for (or a wrong auth). This feature is ment for module develope
 don't have to install your just-written module to be able to test it.
 
 If there was no matching file in `@*INC`, we are grabbing the MANIFEST files from home, site, vendor
-and perl. The module with the highest version that matches the given auth+version of the "use"-state-
-ments wins.
+and perl. The module with the highest version that matches the given auth+version of the "use"-statements wins.
 BTW, the home, site, vendor and perl directories are already accessable via `%*CUSTOM_LIB`.
 
 The good thing with the method above is that you really don't have to bother if you can sudo or not
@@ -87,3 +86,16 @@ If we don't have such a mapping table or a character can not be translated, it w
 its Unicode codepoint. 北亰 = x5317x4EB0.pm
 
 2) The author field should be made mandatory: https://github.com/perl6/ecosystem/blob/master/spec.pod
+
+3) The filename structure within the downloadable distribution has to agree with the namespaces the dist provides.
+For example, if the dist provides a class called Foo::北亰, there must be the file "lib/Foo/北亰.pm" or "lib/Foo/北亰.pm6".
+If the dist author will provide Unicode classnames but has no Unicode-able filesystem, he has to extend the META.info in the following way:
+```
+{
+    "name" : "Foo::北亰",
+    [...]
+    "provides": {
+        "Foo::北亰" : "lib/Foo/BejJing.pm"
+    }
+}
+```
