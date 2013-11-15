@@ -1,32 +1,45 @@
 
 use v6;
 use Test;
+use lib 'lib';
+use lib 't/deps';
+use MyModuleLoader;
+use JSON::Tiny;
 
-BEGIN {
-	%*ENV<PERL6LIB>      = cwd() ~ '/libs/PERL6LIB';
-	%*CUSTOM_LIB<home>   = cwd() ~ '/libs/home';
-	%*CUSTOM_LIB<site>   = cwd() ~ '/libs/site';
-	%*CUSTOM_LIB<vendor> = cwd() ~ '/libs/vendor';
-	%*CUSTOM_LIB<perl>   = cwd() ~ '/libs/perl';
+class MyModuleLoader::Suggestions {
+    method load_module($module_name, %opts, *@GLOBALish, :$line, :$file) {
+        say "\%opts.say: " ~ %opts.gist;
+        die "'$module_name' does not seem to be installed."
+    }
 }
 
-use lib 'deps/JSON-Tiny/lib';
-use lib 'lib';
-use S11Versioning;
+MyModuleLoader.add_loader( MyModuleLoader::Suggestions );
 
-my @perl6lib = %*ENV<PERL6LIB>.split(':');
+#~ BEGIN {
+	#~ %*ENV<PERL6LIB>      = cwd() ~ '/libs/PERL6LIB';
+	#~ %*CUSTOM_LIB<home>   = cwd() ~ '/libs/home';
+	#~ %*CUSTOM_LIB<site>   = cwd() ~ '/libs/site';
+	#~ %*CUSTOM_LIB<vendor> = cwd() ~ '/libs/vendor';
+	#~ %*CUSTOM_LIB<perl>   = cwd() ~ '/libs/perl';
+#~ }
 
-# sanity checks
-ok .IO ~~ :d, "PERL6LIB's directories do exist" for @perl6lib;
-ok %*CUSTOM_LIB<home>.IO   ~~ :d, 'home dir does exist';
-ok %*CUSTOM_LIB<site>.IO   ~~ :d, 'site dir does exist';
-ok %*CUSTOM_LIB<vendor>.IO ~~ :d, 'vendor dir does exist';
-ok %*CUSTOM_LIB<perl>.IO   ~~ :d, 'perl dir does exist';
+#~ use lib 'deps/JSON-Tiny/lib';
+#~ use lib 'lib';
+#~ use S11Versioning;
 
-is use('Foo::Bar'),             "%*CUSTOM_LIB<site>/Foo/Bar.pm",   'use Foo::Bar';
-is use('Foo::Bar:(*..1.0.3)'),  "%*CUSTOM_LIB<site>/Foo/Bar-1.pm", 'use Foo::Bar:(*..1.0.3)';
-is use('Foo::Bar:(*..^1.0.4)'), "%*CUSTOM_LIB<site>/Foo/Bar-1.pm", 'use Foo::Bar:(*..^1.0.4)';
-is use('Foo::Bar:(^1.0.4)'),    "%*CUSTOM_LIB<site>/Foo/Bar-1.pm", 'use Foo::Bar:(^1.0.4)';
+#~ my @perl6lib = %*ENV<PERL6LIB>.split(':');
+
+#~ # sanity checks
+#~ ok .IO ~~ :d, "PERL6LIB's directories do exist" for @perl6lib;
+#~ ok %*CUSTOM_LIB<home>.IO   ~~ :d, 'home dir does exist';
+#~ ok %*CUSTOM_LIB<site>.IO   ~~ :d, 'site dir does exist';
+#~ ok %*CUSTOM_LIB<vendor>.IO ~~ :d, 'vendor dir does exist';
+#~ ok %*CUSTOM_LIB<perl>.IO   ~~ :d, 'perl dir does exist';
+
+#~ is use('Foo::Bar'),             "%*CUSTOM_LIB<site>/Foo/Bar.pm",   'use Foo::Bar';
+#~ is use('Foo::Bar:(*..1.0.3)'),  "%*CUSTOM_LIB<site>/Foo/Bar-1.pm", 'use Foo::Bar:(*..1.0.3)';
+#~ is use('Foo::Bar:(*..^1.0.4)'), "%*CUSTOM_LIB<site>/Foo/Bar-1.pm", 'use Foo::Bar:(*..^1.0.4)';
+#~ is use('Foo::Bar:(^1.0.4)'),    "%*CUSTOM_LIB<site>/Foo/Bar-1.pm", 'use Foo::Bar:(^1.0.4)';
 
 #use( 'Dog' );
 #use( 'Dog:auth(Any):ver(Any)' );
