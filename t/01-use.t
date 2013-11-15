@@ -6,14 +6,24 @@ use lib 't/deps';
 use MyModuleLoader;
 use JSON::Tiny;
 
-class MyModuleLoader::Suggestions {
-    method load_module($module_name, %opts, *@GLOBALish, :$line, :$file) {
-        say "\%opts.say: " ~ %opts.gist;
-        die "'$module_name' does not seem to be installed."
+plan 1;
+
+my $err_msg;
+
+BEGIN {
+    class MyModuleLoader::TheObvious {
+        method load_module($module_name, %opts, *@GLOBALish, :$line, :$file) {
+            $err_msg = "'$module_name' does not seem to be installed."
+        }
     }
+
+    MyModuleLoader.add_loader( MyModuleLoader::TheObvious );
 }
 
-MyModuleLoader.add_loader( MyModuleLoader::Suggestions );
+{
+    use ThereIsNoSuchModule;
+    ok $err_msg eq "'ThereIsNoSuchModule' does not seem to be installed.", 'got the right error message';
+}
 
 #~ BEGIN {
 	#~ %*ENV<PERL6LIB>      = cwd() ~ '/libs/PERL6LIB';
