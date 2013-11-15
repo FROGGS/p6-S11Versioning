@@ -11,7 +11,8 @@ class MyModuleLoader {
         my Mu $unit := try $p6ml.load_module($module_name, %opts, @GLOBALish, $line, $file);
         if $! {
             for @loaders -> $loader {
-                $loader.load_module($module_name, %opts, @GLOBALish, $line, $file)
+                $unit := $loader.load_module($module_name, %opts, @GLOBALish, $line, $file);
+                last if $unit;
             }
             nqp::hash()
         }
@@ -26,7 +27,10 @@ class MyModuleLoader {
     method absolute_path($path) { $p6ml.absolute_path($path) }
     method ctxsave() { $p6ml.ctxsave() }
     method search_path() { $p6ml.search_path() }
-    method locate_candidates($module_name, @prefixes, :$file) { $p6ml.locate_candidates($module_name, @prefixes, :$file) }
+    method locate_candidates($module_name, @prefixes, :$file) {
+        my Mu $c := $p6ml.locate_candidates($module_name, nqp::p6listitems(nqp::decont([@prefixes])), :$file);
+        $c[0] # we will only get one result
+    }
     method load_setting($setting_name) { $p6ml.load_setting($setting_name) }
     method resolve_repossession_conflicts(@conflicts) { $p6ml.resolve_repossession_conflicts(@conflicts) }
 
