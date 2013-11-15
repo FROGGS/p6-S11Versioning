@@ -2,9 +2,7 @@
 use v6;
 use Test;
 use lib 'lib';
-use lib 't/deps';
 use MyModuleLoader;
-use JSON::Tiny;
 
 plan 1;
 
