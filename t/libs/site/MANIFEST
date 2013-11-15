@@ -2,9 +2,9 @@
     {
         "id" : "1",
         "name" : "Foo::Bar",
-        "version" : "1.0.1",
+        "ver" : "1.0.1",
         "description" : "The most useful module evar!!",
-        "author" : "Kevin Flynn <kevin@EN.COM>",
+        "auth" : "Kevin Flynn <kevin@EN.COM>",
         "modules" : {
             "Foo::Bar" : "Foo/Bar-1.pm",
             "Foo::Bar::Constants" : "Foo/Bar/Constants.pm"
@@ -16,9 +16,9 @@
     {
         "id" : "2",
         "name" : "Foo::Bar",
-        "version" : "1.0.4",
+        "ver" : "1.0.4",
         "description" : "The most useful module evar!! (improved)",
-        "author" : "Kevin Flynn <kevin@EN.COM>",
+        "auth" : "Kevin Flynn <kevin@EN.COM>",
         "modules" : {
             "Foo::Bar" : "Foo/Bar.pm",
             "Foo::Bar::Constants" : "Foo/Bar/Constants.pm"
