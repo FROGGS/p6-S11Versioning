@@ -1,6 +1,6 @@
 
 use v6;
-use lib cwd() ~ '/lib';
+use lib $*PROGRAM_NAME.path.directory ~ '/lib';
 use MyModuleLoader;
 
 use NoSuchModule;
