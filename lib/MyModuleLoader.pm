@@ -40,19 +40,3 @@ class MyModuleLoader {
 }
 
 nqp::bindhllsym('perl6', 'ModuleLoader', MyModuleLoader);
-
-=pod patch
-diff --git a/src/Perl6/World.nqp b/src/Perl6/World.nqp
-index 9e87f11..b85a61c 100644
---- a/src/Perl6/World.nqp
-+++ b/src/Perl6/World.nqp
-@@ -331,7 +331,7 @@ class Perl6::World is HLL::World {
-     method load_module($/, $module_name, %opts, $cur_GLOBALish) {
-         # Immediate loading.
-         my $line   := HLL::Compiler.lineof($/.orig, $/.from, :cache(1));
--        my $module := Perl6::ModuleLoader.load_module($module_name, %opts,
-+        my $module := nqp::gethllsym('perl6', 'ModuleLoader').load_module($module_name, %opts,
-             $cur_GLOBALish, :$line);
-         
-         # During deserialization, ensure that we get this module loaded.
-=cut patch
