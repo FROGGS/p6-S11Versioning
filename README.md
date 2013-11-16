@@ -1,3 +1,53 @@
+# What this is:
+
+This is an attempt to support http://perlcabal.org/syn/S11.html where you can install, locate and
+load Perl6 modules. The interesting part is, that one should be able to install and use several versions
+of the "same" module, or install and use it from different authors/authorities.
+
+For this to happen I decided to wrap the current ModuleLoader, and delegate to it for the library
+paths that are currently known to the compiler.
+The Idea is that once panda knows about other module loaders (or rather their installation handlers),
+it would use them to install and register modules, which would then be picked up, if the constraints
+of the use-statement allow that.
+
+That follows that the currently known library search paths are treated like for developement purposes:
+A module from these paths is picked up if a file of that module name (split by '::', plus '.pm' extension) is found.
+
+# Current state:
+
+Currently our module database is designed as a MANIFEST file (or several of them), that contain information
+about an installed module, example:
+
+```json
+[
+    {
+        "id" : "1",
+        "name" : "Foo::Bar",
+        "ver" : "1.0.1",
+        "description" : "The most useful module evar!!",
+        "auth" : "Kevin Flynn <kevin@EN.COM>",
+        "modules" : {
+            "Foo::Bar" : "Foo/Bar-1.pm",
+            "Foo::Bar::Constants" : "Foo/Bar/Constants.pm"
+        },
+        "files" : [
+            "Foo/Bar-1.pod"
+        ]
+    }
+]
+```
+
+The so called `MyModuleLoader::MANIFEST` is already able to locate such a module, by a use statements like:
+
+```perl
+use Foo::Bar;
+use Foo::Bar:ver<1.0.1>;
+use Foo::Bar:ver(v0.9.7..*);
+use Foo::Bar:auth({ .substr(-6) eq 'EN.COM'});
+use Foo::Bar:auth(/Flynn/);
+...
+```
+
 # installing distributions:
 
 ```
