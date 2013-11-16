@@ -37,7 +37,7 @@ about an installed module, example:
 ]
 ```
 
-The so called `MyModuleLoader::MANIFEST` is already able to locate such a module, by a use statements like:
+The so called `MyModuleLoader::MANIFEST` is already able to locate such a module, by use statements like:
 
 ```perl
 use Foo::Bar;
