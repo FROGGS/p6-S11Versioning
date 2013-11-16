@@ -43,7 +43,7 @@ The so called `MyModuleLoader::MANIFEST` is already able to locate such a module
 use Foo::Bar;
 use Foo::Bar:ver<1.0.1>;
 use Foo::Bar:ver(v0.9.7..*);
-use Foo::Bar:auth({ .substr(-6) eq 'EN.COM'});
+use Foo::Bar:auth({ .substr(*-6) eq 'EN.COM' });
 use Foo::Bar:auth(/Flynn/);
 ...
 ```
