@@ -1,2 +1,4 @@
 
 module Foo;
+
+say "Foo"

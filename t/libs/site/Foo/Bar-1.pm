@@ -1,0 +1,1 @@
+say "ok 2 - Foo::Bar:auth<Kevin Flynn <kevin@EN.COM>>:ver<1.0.1>:file<t/libs/site/Foo/Bar-1.pm>"
