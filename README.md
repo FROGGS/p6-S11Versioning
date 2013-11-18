@@ -37,9 +37,11 @@ about an installed module, example:
 ]
 ```
 
-The so called `MyModuleLoader::MANIFEST` is already able to locate such a module, by use statements like:
+The following code just works with a current racudo:
 
 ```perl
+use CompUnitRepo;
+
 use Foo::Bar;
 use Foo::Bar:ver<1.0.1>;
 use Foo::Bar:ver(v0.9.7..*);
