@@ -11,12 +11,12 @@ it would use them to install and register modules, which would then be picked up
 of the use-statement allow that.
 
 That follows that the currently known library search paths are treated like for developement purposes:
-A module from these paths is picked up if a file of that module name (split by '::', plus '.pm' extension) is found.
+A module from these paths is picked up if a file of that module name (split by '::', plus e.g. '.pm' extension) is found.
 
 # Current state:
 
-Currently our module database is designed as a MANIFEST file (or several of them), that contain information
-about an installed module, example:
+Currently our module database is designed as a json file (or several of them), that contain information
+about an installed modules, example:
 
 ```json
 [
@@ -37,7 +37,7 @@ about an installed module, example:
 ]
 ```
 
-The following code just works with a current racudo:
+The following code just works with a current rakudo:
 
 ```perl
 use CompUnitRepo;
