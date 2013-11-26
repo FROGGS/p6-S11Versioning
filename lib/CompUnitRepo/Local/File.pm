@@ -1,8 +1,12 @@
 
 class CompUnitRepo::Local::File is export {
-    my @paths;
+    has @!paths;
     method new( *@location ) {
-        @paths = @location;
+        self.bless(:@location)
+    }
+
+    method BUILD( :@location ) {
+        @!paths = @location;
         self
     }
 
@@ -12,7 +16,7 @@ class CompUnitRepo::Local::File is export {
 
     method candidates( $longname, :$file, :$auth, :$ver ) {
         my @candi;
-        my Mu $c := nqp::gethllsym('perl6', 'ModuleLoader').p6ml.locate_candidates($longname, nqp::p6listitems(nqp::decont([@paths])), :$file);
+        my Mu $c := nqp::gethllsym('perl6', 'ModuleLoader').p6ml.locate_candidates($longname, nqp::p6listitems(nqp::decont([@!paths])), :$file);
         if $c[0] {
             $c[0]<ver> = Version.new( '*' );
             @candi.push: $c[0].item;

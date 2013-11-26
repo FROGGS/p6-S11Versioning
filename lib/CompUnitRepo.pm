@@ -11,8 +11,9 @@ class CompUnitRepo {
         @candi.sort: { $^b<ver> cmp $^a<ver> }
     }
 
-    method add_repo($repo) {
-        @repos.push: $repo
+    method add_repo($repo, :$name) {
+        @repos.push: $repo;
+        %*CUSTOM_LIB{$name} := $repo if $name
     }
 
     method p6ml { $p6ml }
@@ -30,15 +31,18 @@ if 'libraries.cfg'.IO.e {
     my @lines = slurp('libraries.cfg').lines;
     my %repos;
     for @lines -> $repo {
-        if $repo ~~ / $<class>=[ <.ident>+ % '::' ] '=' $<path>=.+ / {
-            %repos{~$<class>} //= [];
-            %repos{~$<class>}.push(~$<path>);
+        if $repo ~~ / $<class>=[ <.ident>+ % '::' ] [ ':name<' $<libname>=\w+ '>' ]? '=' $<path>=.+ / {
+            my $libname = $<libname> // '';
+            %repos{~$<class>}{$libname} //= [];
+            %repos{~$<class>}{$libname}.push(~$<path>);
         }
     }
-    for %repos.kv -> $longname, $args {
-        my $name = 'lib/' ~ $longname.split('::').join('/') ~ '.pm';
-        require $name;
-        CompUnitRepo.add_repo( ::($longname).new(|@$args) );
+    for %repos.kv -> $classname, $libnames {
+        for $libnames.kv -> $libname, $args {
+            my $name = 'lib/' ~ $classname.split('::').join('/') ~ '.pm';
+            require $name;
+            CompUnitRepo.add_repo( ::($classname).new(|@$args), :name($libname) );
+        }
     }
 }
 
