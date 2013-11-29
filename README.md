@@ -26,7 +26,7 @@ about an installed modules, example:
         "ver" : "1.0.1",
         "description" : "The most useful module evar!!",
         "auth" : "Kevin Flynn <kevin@EN.COM>",
-        "modules" : {
+        "provides" : {
             "Foo::Bar" : "Foo/Bar-1.pm",
             "Foo::Bar::Constants" : "Foo/Bar/Constants.pm"
         },

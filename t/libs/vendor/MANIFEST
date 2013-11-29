@@ -5,7 +5,7 @@
         "ver" : "0.27",
         "description" : "The most useful beta module evar!!",
         "auth" : "Kevin Flynn <kevin@EN.COM>",
-        "modules" : {
+        "provides" : {
             "Foo::Bar" : "Foo/Bar.pm"
         },
         "files" : [

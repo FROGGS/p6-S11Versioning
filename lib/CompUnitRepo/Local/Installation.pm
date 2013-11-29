@@ -27,9 +27,9 @@ class CompUnitRepo::Local::Installation {
                 
                 if (!$auth || $dist<auth> ~~ $auth)
                 && (!$ver  || $dist<ver>  ~~ $ver)
-                && $dist<modules>{$longname} {
+                && $dist<provides>{$longname} {
                     my $candi   = $dist;
-                    $candi<key> = $path ~ '/' ~ $dist<modules>{$longname};
+                    $candi<key> = $path ~ '/' ~ $dist<provides>{$longname};
                     @candi.push: $candi;
                 }
             }
