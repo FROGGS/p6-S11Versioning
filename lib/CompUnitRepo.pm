@@ -20,7 +20,7 @@ class CompUnitRepo {
 
     method load_module($module_name, %opts, *@GLOBALish, :$line, :$file is copy) {
         $file //= self.candidates($module_name, :auth(%opts<auth>), :ver(%opts<ver>))[0]<key>;
-        $p6ml.load_module($module_name, %opts, @GLOBALish, $file, :$file);
+        $p6ml.load_module($module_name, %opts, @GLOBALish, :$line, :$file);
     }
 
     method absolute_path($path) { $p6ml.absolute_path($path) }
