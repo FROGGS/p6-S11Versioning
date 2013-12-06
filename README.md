@@ -19,22 +19,48 @@ Currently our module database is designed as a json file (or several of them), t
 about an installed modules, example:
 
 ```json
-[
+{
+  "file-count" : 5,
+  "dist-count" : 1,
+  "dists" : [
     {
-        "id" : "1",
-        "name" : "Foo::Bar",
-        "ver" : "1.0.1",
-        "description" : "The most useful module evar!!",
-        "auth" : "Kevin Flynn <kevin@EN.COM>",
-        "provides" : {
-            "Foo::Bar" : "Foo/Bar-1.pm",
-            "Foo::Bar::Constants" : "Foo/Bar/Constants.pm"
+      "id" : 0,
+      "name" : "Foo::Bar",
+      "ver" : "1.0.1",
+      "description" : "The most useful module evar!!",
+      "auth" : "Kevin Flynn <kevin@EN.COM>",
+      "provides" : {
+        "Foo::Bar" : {
+          "pm" : {
+            "file" : 2,
+            "time" : 1386184612,
+            "cver" : "2013.11-20-g874e358"
+          },
+          "pir" : {
+            "file" : 3,
+            "time" : 1386184612,
+            "cver" : "2013.11-20-g874e358"
+          }
         },
-        "files" : [
-            "Foo/Bar-1.pod"
-        ]
+        "Foo::Bar::Constants" : {
+          "pm" : {
+            "file" : 0,
+            "time" : 1386184612,
+            "cver" : "2013.11-20-g874e358"
+          },
+          "pir" : {
+            "file" : 1,
+            "time" : 1386184612,
+            "cver" : "2013.11-20-g874e358"
+          }
+        }
+      },
+      "files" : {
+        "Foo/Bar.pod" : 5
+      }
     }
-]
+  ]
+}
 ```
 
 The following code just works with a current rakudo:
